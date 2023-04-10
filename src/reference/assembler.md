@@ -194,6 +194,6 @@ A label is declared like this:
 * `ret`
   * Return from a call
 * `crash`
-  * Inserts an invalid opcode and crashes the runtime
+  * Insert an invalid opcode and crash the runtime dumping the registers contents
 * `ref Xdst <static variable>` or `lea Xdst <static variable>`
   * Load the effective address of a static variable into `Xdst`
