@@ -4,7 +4,7 @@
 
 To use the assembler mode start your file with the following line:
 
-```clj
+```clojure
 (mod assembly)
 ```
 
@@ -33,7 +33,7 @@ Referencing a string returns the address to the bytes of the string.
 
 Static variables are declared like this:
 
-```clj
+```clojure
 (static a 10) ; int
 (static b 10u) ; uint
 (static c 10.0) ; float
@@ -58,6 +58,81 @@ A label is declared like this:
 ```clojure
 (+label add (do
   (add r0 r0 r1)
+))
+```
+
+### Control flow
+
+The assembler does conditional code execution through control flow statements.
+
+#### `do`
+
+The `do` statement executes multiple instructions after one another.
+
+It looks like this:
+
+```clojure
+(+label exit-failure (do
+  (mov r0 1u)
+  (int 4u)
+  (crash)
+))
+```
+
+#### `if`
+
+The `if` statement executes code conditionally.
+
+It takes one of the possible conditions (`=`, `!=`, `<`, `>`, `<=`, `>=`, `=0`,
+`!0`), a register with the source, and code to execute.
+
+It can be used like this:
+
+```clojure
+(+label abs (do
+  (mov r1 0u)
+  (cmps r1 r0 r1)
+  (if >= r1 (ret))
+  (mov r1 0u)
+  (sub r0 r1 r0)
+))
+```
+
+Here it is used with the early return pattern.
+
+#### `while`
+
+The `while` statement executes code while a certain condition is met.
+
+It has a syntax similar to the one of an `if` statement:
+
+```clojure
+(+label factorial (do
+  (mov r1 1u)
+  (while !0 r0 (do
+    (mul r1 r0 r1)
+    (sub r0 r0 1u)
+  ))
+  (mov r0 r1)
+))
+```
+
+#### `do-while`
+
+Alternatively to the `while` loop you can use a `do-while` loop.
+
+The difference is that for the `do-while` loop the first iteration is executed
+always.
+
+Additionally the syntax is a bit different:
+
+```clojure
+(+label test (do
+  ; ...
+  (do-while (do
+    ; ...
+  ) !0 r0)
+  ; ...
 ))
 ```
 
@@ -194,6 +269,6 @@ A label is declared like this:
 * `ret`
   * Return from a call
 * `crash`
-  * Insert an invalid opcode and crash the runtime dumping the registers contents
+  * Insert an invalid opcode and crash the runtime dumping the register contents
 * `ref Xdst <static variable>` or `lea Xdst <static variable>`
   * Load the effective address of a static variable into `Xdst`
