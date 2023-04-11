@@ -8,6 +8,14 @@ To use the assembler mode start your file with the following line:
 (mod assembly)
 ```
 
+## Imports
+
+To import functions from another module use the `use` statement:
+
+```clojure
+(use module-name)
+```
+
 ## Static variables
 
 Static variables are variables that are directly stored inside the binary.
