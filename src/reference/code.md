@@ -39,6 +39,7 @@ The following types are supportet for static variables:
 * `buffer`: a fixed size buffer filled with a specific byte
 * `int-array`: an array of 64-bit signed integers
 * `uint-array`: an array of 64-bit unsigned integers
+* `float-array`: an array of 64-bit floating point numbers
 
 ## Syntax
 
@@ -71,6 +72,7 @@ Buffers have the following syntax:
 Arrays are represented by its elements enclosed by square brackets:
 
 ```clojure
-[1 2 3 4 5] ; signed
-[1u 2 3 4 5] ; unsigned
+[1 2 3 4 5] ; signed integers
+[1u 2 3 4 5] ; unsigned integers
+[1.0 2.0 3.0] ; floats
 ```
