@@ -5,7 +5,7 @@
 To use the assembler mode start your file with the following line:
 
 ```clojure
-(mod assembly)
+(mod asm)
 ```
 
 ## Imports
